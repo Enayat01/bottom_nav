@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         HomeScreen.routeName: (context) => const HomeScreen(),
         LocationScreen.routeName: (context) => const LocationScreen(),
         CarsScreen.routeName: (context) => const CarsScreen(),
-        HistoryScreen.routeName: (context) => HistoryScreen(),
+        HistoryScreen.routeName: (context) => const HistoryScreen(),
       },
     );
   }

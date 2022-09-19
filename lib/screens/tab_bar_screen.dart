@@ -29,7 +29,7 @@ class _TabBarScreenState extends State<TabBarScreen> {
   void initState() {
     //List of pages as map
     _pages = [
-      {'page':  HistoryScreen(), 'title': 'History'},
+      {'page':  const HistoryScreen(), 'title': 'History'},
       {'page': const CarsScreen(), 'title': 'My Cars'},
       {'page': '', 'title': ''},
       {'page': const MapScreen(), 'title': 'Locations'},
