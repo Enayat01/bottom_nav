@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
-import '../models/news_info.dart';
+import '../models/news.dart';
+import '../services/api_client.dart';
 
 enum NewsEvent { fetch, delete }
 
@@ -16,9 +18,11 @@ class NewsBloc {
 
   NewsBloc() {
     _eventStream.listen((event) async {
+      final client =
+          ApiClient(Dio(BaseOptions(contentType: "application/json")));
       if (event == NewsEvent.fetch) {
         try {
-          var news = await getNews();
+          var news = await client.fetchNews();
           _newsSink.add(news.articles);
         } on Exception catch (e) {
           _newsSink.addError('error occurred');
@@ -26,25 +30,25 @@ class NewsBloc {
       }
     });
   }
-  Future<NewsModel> getNews() async {
-    var newsModel;
-
-    try {
-      var response = await http.get(
-        Uri.parse(
-            'http://newsapi.org/v2/everything?domains=wsj.com&apiKey=eacefcc71ae04739bbe087cf17aab95b'),
-      );
-      print(response.body);
-      if (response.statusCode == 200) {
-        newsModel = newsModelFromJson(response.body);
-        return newsModel;
-      }
-    } on Exception {
-      return newsModel;
-    }
-
-    return newsModel;
-  }
+  // Future<NewsModel> getNews() async {
+  //   var newsModel;
+  //
+  //   try {
+  //     var response = await http.get(
+  //       Uri.parse(
+  //           'http://newsapi.org/v2/everything?domains=wsj.com&apiKey=eacefcc71ae04739bbe087cf17aab95b'),
+  //     );
+  //     print(response.body);
+  //     if (response.statusCode == 200) {
+  //       newsModel = newsModelFromJson(response.body);
+  //       return newsModel;
+  //     }
+  //   } on Exception {
+  //     return newsModel;
+  //   }
+  //
+  //   return newsModel;
+  // }
 
   void dispose() {
     _stateController.close();
