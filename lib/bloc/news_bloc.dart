@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/news_info.dart';
 
@@ -28,19 +27,15 @@ class NewsBloc {
     });
   }
   Future<NewsModel> getNews() async {
-    var client = http.Client();
     var newsModel;
 
     try {
-      var response = await client.get(
+      var response = await http.get(
         Uri.parse(
             'http://newsapi.org/v2/everything?domains=wsj.com&apiKey=eacefcc71ae04739bbe087cf17aab95b'),
       );
       print(response.body);
       if (response.statusCode == 200) {
-        var jsonString = response.body;
-        var jsonMap = json.decode(jsonString);
-
         newsModel = newsModelFromJson(response.body);
         return newsModel;
       }
