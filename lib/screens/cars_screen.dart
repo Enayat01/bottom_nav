@@ -1,9 +1,8 @@
-import 'package:bottom_nav/bloc/news_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../bloc/news_bloc.dart';
 import '../models/news.dart';
-
 
 class CarsScreen extends StatefulWidget {
   const CarsScreen({Key? key}) : super(key: key);
